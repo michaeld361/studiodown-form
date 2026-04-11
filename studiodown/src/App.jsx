@@ -372,7 +372,7 @@ export default function StudioDown() {
         ::placeholder { color: #555; }
       `}</style>
 
-      <LivingBlob dimmed={view === "form" || view === "done"} />
+      <LivingBlob dimmed={view === "form"} />
 
       {/* ── HOME ── */}
       {view === "home" && (
