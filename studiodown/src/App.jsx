@@ -296,10 +296,14 @@ export default function StudioDown() {
   }, [view]);
 
   // Form step transitions
+  const formContentRef = useRef(null);
   useEffect(() => {
     if (view !== "form") return;
     setEntering(false);
-    const t = setTimeout(() => setEntering(true), 30);
+    const t = setTimeout(() => {
+      if (formContentRef.current) formContentRef.current.scrollTo({ top: 0, behavior: "instant" });
+      setEntering(true);
+    }, 200);
     return () => clearTimeout(t);
   }, [step, view]);
 
@@ -457,16 +461,29 @@ export default function StudioDown() {
           </div>
 
           {/* Content */}
-          <div style={{
+          <div ref={formContentRef} style={{
             flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-start",
             padding: "120px 32px 260px", maxWidth: 560, margin: "0 auto", width: "100%", boxSizing: "border-box",
             overflowY: "auto", overscrollBehavior: "none",
-            opacity: entering ? 1 : 0, transform: entering ? "translateY(0)" : "translateY(12px)",
-            transition: "opacity 0.4s ease, transform 0.4s ease",
           }}>
-            <h1 style={{ fontSize: 34, fontWeight: 600, lineHeight: 1.2, margin: "0 0 16px 0", letterSpacing: "-0.02em", color: "#fff" }}>{currentStep.title}</h1>
-            <p style={{ fontSize: 15, color: "#666", lineHeight: 1.7, margin: "0 0 48px 0", maxWidth: 440, letterSpacing: "0.01em" }}>{currentStep.subtitle}</p>
-            {currentStep.fields.map((f) => <Field key={f.key} field={f} value={data[f.key]} onChange={(v) => setData((d) => ({ ...d, [f.key]: v }))} />)}
+            <h1 style={{
+              fontSize: 34, fontWeight: 600, lineHeight: 1.2, margin: "0 0 16px 0",
+              letterSpacing: "-0.02em", color: "#fff",
+              opacity: entering ? 1 : 0, transform: entering ? "translateY(0)" : "translateY(12px)",
+              transition: "opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+            }}>{currentStep.title}</h1>
+            <p style={{
+              fontSize: 15, color: "#666", lineHeight: 1.7, margin: "0 0 48px 0",
+              maxWidth: 440, letterSpacing: "0.01em",
+              opacity: entering ? 1 : 0, transform: entering ? "translateY(0)" : "translateY(12px)",
+              transition: "opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.12s, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.12s",
+            }}>{currentStep.subtitle}</p>
+            <div style={{
+              opacity: entering ? 1 : 0, transform: entering ? "translateY(0)" : "translateY(12px)",
+              transition: "opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.24s, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.24s",
+            }}>
+              {currentStep.fields.map((f) => <Field key={f.key} field={f} value={data[f.key]} onChange={(v) => setData((d) => ({ ...d, [f.key]: v }))} />)}
+            </div>
           </div>
 
           {/* Footer */}
