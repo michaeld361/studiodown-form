@@ -54,7 +54,7 @@ const STEPS = [
     { key: "contentReady", label: "What content do you already have?", type: "multiselect", options: ["Professional photography", "Product photos", "Written content or copy", "Video content", "Team photos", "Nothing yet — we need guidance"], required: true },
   ]},
   { id: "sensory", stage: "05", title: "Sensory.", subtitle: "These might feel unusual, but they help us understand the feeling you're after.", fields: [
-    { key: "material", label: "If your brand were a material, what would it be?", type: "text", placeholder: "e.g. soft cotton, polished marble, warm wood, matte black metal", required: false },
+    { key: "material", label: "If your brand were a material, what would it be?", type: "text", placeholder: "e.g. soft cotton, polished marble, warm wood", required: false },
     { key: "timeOfDay", label: "What time of day feels like your brand?", type: "select", options: ["Early morning — calm, full of possibility", "Mid-morning — bright and energetic", "Golden hour — warm and confident", "Late evening — intimate and focused", "Midnight — bold and dramatic"], required: false },
     { key: "season", label: "What season?", type: "select", options: ["Spring — fresh, light, new", "Summer — bold, vibrant, warm", "Autumn — rich, mature, textured", "Winter — clean, crisp, minimal"], required: false },
     { key: "anythingElse", label: "Anything else that captures the feeling?", type: "textarea", placeholder: "A song, a place, a photo, a memory — anything that captures the mood you're going for. There's no wrong answer.", required: false },
@@ -165,7 +165,7 @@ function LivingBlob({ dimmed }) {
     <canvas ref={canvasRef} style={{
       position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
       pointerEvents: "none", zIndex: 1,
-      opacity: dimmed ? 0.3 : 1, transition: "opacity 0.8s ease",
+      opacity: dimmed ? 0 : 1, transition: "opacity 0.8s ease",
     }} />
   );
 }
@@ -229,7 +229,7 @@ function Field({ field, value, onChange }) {
         {!field.required && <span style={{ color: "#444", marginLeft: 8, textTransform: "none", fontSize: 12 }}>optional</span>}
       </label>
       {field.type === "text" && <input type="text" value={value || ""} onChange={(e) => onChange(e.target.value)} placeholder={field.placeholder} style={base} onFocus={focus} onBlur={blur} />}
-      {field.type === "textarea" && <textarea value={value || ""} onChange={(e) => onChange(e.target.value)} placeholder={field.placeholder} rows={3} style={{ ...base, resize: "vertical", minHeight: 80, lineHeight: 1.6 }} onFocus={focus} onBlur={blur} />}
+      {field.type === "textarea" && <textarea value={value || ""} onChange={(e) => onChange(e.target.value)} placeholder={field.placeholder} rows={4} style={{ ...base, resize: "vertical", minHeight: 100, lineHeight: 1.6 }} onFocus={focus} onBlur={blur} />}
       {field.type === "select" && (
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {field.options.map((o) => (
@@ -368,7 +368,7 @@ export default function StudioDown() {
         ::placeholder { color: #555; }
       `}</style>
 
-      <LivingBlob dimmed={view === "form"} />
+      <LivingBlob dimmed={view === "form" || view === "done"} />
 
       {/* ── HOME ── */}
       {view === "home" && (
@@ -459,7 +459,7 @@ export default function StudioDown() {
           {/* Content */}
           <div style={{
             flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-start",
-            padding: "120px 32px 160px", maxWidth: 560, margin: "0 auto", width: "100%", boxSizing: "border-box",
+            padding: "120px 32px 260px", maxWidth: 560, margin: "0 auto", width: "100%", boxSizing: "border-box",
             overflowY: "auto", overscrollBehavior: "none",
             opacity: entering ? 1 : 0, transform: entering ? "translateY(0)" : "translateY(12px)",
             transition: "opacity 0.4s ease, transform 0.4s ease",
@@ -503,19 +503,18 @@ export default function StudioDown() {
       {/* ── DONE ── */}
       {view === "done" && (
         <div style={{
-          position: "relative", zIndex: 2, minHeight: "100vh",
+          position: "relative", zIndex: 2, height: "100vh",
           display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
           padding: "0 32px",
         }}>
           <div style={{ maxWidth: 480 }}>
             <h1 style={{ fontSize: 42, fontWeight: 300, lineHeight: 1.2, marginBottom: 16, letterSpacing: "-0.02em" }}>Got it.</h1>
             <p style={{ fontSize: 15, color: "#888", lineHeight: 1.7, letterSpacing: "0.01em", whiteSpace: "pre-line" }}>
-              {"We'll review your answers and get back to you within 24 hours with a proposal.\n\nNo fluff. No decks. Just what we'd build and how long it takes."}
+              {"This gives us everything we need to start exploring ideas for your brand.\n\nWe'll be in touch."}
             </p>
           </div>
           <div style={{
             position: "fixed", bottom: 0, left: 0, right: 0, padding: "24px 32px 32px", textAlign: "center",
-            background: "linear-gradient(to top, #000 60%, transparent)",
           }}>
             <a href="mailto:hello@studiodown.com" style={{ color: "#888", fontSize: 13, fontFamily: "'Outfit', sans-serif", letterSpacing: "0.1em", textDecoration: "none" }}>hello@studiodown.com</a>
           </div>
