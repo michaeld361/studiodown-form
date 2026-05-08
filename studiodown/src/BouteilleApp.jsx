@@ -284,7 +284,7 @@ export default function BouteilleApp() {
             apikey: SUPABASE_ANON_KEY,
             Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
           },
-          body: JSON.stringify({ data, submitted_at: new Date().toISOString(), client: "bouteille" }),
+          body: JSON.stringify({ data, submitted_at: new Date().toISOString() }),
         });
       } catch (err) { console.error("Submit error:", err); }
       clearCache();

@@ -64,7 +64,6 @@ const STEPS = [
     { key: "contactName", label: "Your name", type: "text", placeholder: "", required: true },
     { key: "contactEmail", label: "Email", type: "text", placeholder: "", required: true },
     { key: "contactPhone", label: "Phone (optional)", type: "text", placeholder: "", required: false },
-    { key: "preferredLanguage", label: "Preferred language for communication", type: "select", options: ["English", "French", "No preference"], required: false },
   ]},
 ];
 
